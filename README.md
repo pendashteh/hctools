@@ -8,7 +8,7 @@ The most important one, **simulating a multi-node environment**.
 
 These tools are either wrapper around the main `hc*` commands or they are helpers.
 
-# Developer Journeies
+# Developer Journeys
 Let's go through some of the very common *developer journeies* and see how the toolkit helps.
 
 You can also jump to the section where we introduce tools, individually.
@@ -20,25 +20,38 @@ For that, we need to run two totally seperate instances of the app. Those instan
 
 To make it clean and simple, we will have two terminal windows open and run commands for every `agent` in its own terminal.
 
-1. Let's create two agents first and call them `a1` and `a2`:
+### Bite 1
+Let's **create two agents** first and call them `a1` and `a2`:
+
 *Terminal 1:* `$ hcagent-init a1`
+
 *Terminal 2:* `$ hcagent-init a2`
 
-2. Now, let's install our app for both of them:
-*Both Terminals:* `$ cd ~/dev/dapps/myapp`
-*Terminal 1:* `$ hcadmin-agent a1 join . myapp`
-*Terminal 2:* `$ hcadmin-agent a2 join . myapp`
+### Bite 2
+Now, let's **install our app** for both of them:
 
-3. Ok, ready to run the app?
+*Terminal 1:* `$ hcadmin-agent a1 join ~/dev/mydapp/ mydapp`
+
+*Terminal 2:* `$ hcadmin-agent a2 join ~/dev/mydapp/ mydapp`
+
+### Bite 3
+Ok, ready to run the app?
+
 Before we do so, we need to start the **Bootstrap Server (BS)**.
+
 We need to keep Bootstrap Server running, so let's run it in a separete terminal:
+
 *Terminal 3:* `$ bs --port=5001`
 
 `bs` is a standard Holochain command. `hctools` is using `5001` as the BS port.
 
-4. Finally it's time to run our apps, or better to say to get our agents run their node!
-*Terminal 1:* `$ hcd-agent a1 myapp 3141`
-*Terminal 2:* `$ hcd-agent a2 myapp 3142`
+### Bite 4
+
+Finally it's time to run our apps, or better to say to get our **agents run their node**!
+
+*Terminal 1:* `$ hcd-agent a1 mydapp 3141`
+
+*Terminal 2:* `$ hcd-agent a2 mydapp 3142`
 
 Cool, had fun? More journeies to come, stay tuned!
 
