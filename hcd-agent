@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+# @TODO Document me!
+
+#export HCLOG_DHT_ENABLE=1
+export HCLOG_GOSSIP_ENABLE=true
+#export HC_DEFAULT_ENABLEMDNS=true
+
+holochain_agents_path=$HOME/.holochain-agents
+agent_name=$1
+
+if [ -z $agent_name ] || [ ! -d $holochain_agents_path/$agent_name ]; then
+	echo "[Error]"
+	echo "Usage: hcd-agent AGENT_NAME COMMAND [command options]"
+	echo "Missing or invalid agent name."
+	echo "Avaliable agents:"
+	cd $holochain_agents_path
+	ls -d ./*/ | cut -f2 -d'/' | awk '$0=" └─ "$0'
+	exit
+fi
+
+hcd --debug --verbose --path $holochain_agents_path/$agent_name ${*:2}

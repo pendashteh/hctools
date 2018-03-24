@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+# @TODO Document me!
+
+holochain_agents_path=$HOME/.holochain-agents
+agent_name=$1
+
+if [ -z $agent_name ] || [ ! -d $holochain_agents_path/$agent_name ]; then
+	echo "[Error]"
+	echo "Usage: hcagent-rm AGENT_NAME"
+	echo "Missing or invalid agent name."
+	echo "The following agents name are available:"
+	cd $holochain_agents_path
+	ls -d ./*/ | cut -f2 -d'/' | awk '$0=" └─ "$0'
+	exit
+fi
+
+rm -rf $holochain_agents_path/$agent_name

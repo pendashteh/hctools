@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+# @TODO Document me!
+
+holochain_agents_path=$HOME/.holochain-agents
+agent_name=$1
+holochain_config_port_default=6283
+holochain_config_bs="127.0.0.1:5001"
+
+if [ -z $agent_name ] || [ ! -d $holochain_agents_path/$agent_name ]; then
+	echo "[Error]"
+	echo "Usage: hcadmin-agent AGENT_NAME COMMAND [command options]"
+	echo "Missing or invalid agent name."
+	echo "Avaliable agents:"
+	cd $holochain_agents_path
+	ls -d ./*/ | cut -f2 -d'/' | awk '$0=" └─ "$0'
+	exit
+fi
+
+if [ ! -e $holochain_agents_path/HOLOCHAINCONFIG_PORT ]; then
+	echo $holochain_config_port_default > $holochain_agents_path/HOLOCHAINCONFIG_PORT
+fi
+
+port=$(($(cat $holochain_agents_path/HOLOCHAINCONFIG_PORT)+1))
+export HOLOCHAINCONFIG_PORT=$port
+echo $HOLOCHAINCONFIG_PORT > $holochain_agents_path/HOLOCHAINCONFIG_PORT
+
+export HOLOCHAINCONFIG_BOOTSTRAP=$holochain_config_bs
+
+echo "Running hcadmin with HOLOCHAINCONFIG_PORT=$HOLOCHAINCONFIG_PORT and HOLOCHAINCONFIG_BOOTSTRAP=$HOLOCHAINCONFIG_BOOTSTRAP"
+hcadmin --debug --verbose --path $holochain_agents_path/$agent_name ${*:2}
