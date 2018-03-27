@@ -23,6 +23,8 @@ if [ -z $agent_name ] || [ ! -d $holochain_agents_path/$agent_name ]; then
 	exit
 fi
 
+# Make sure the Bootstrap Server is running
+# Copyright https://stackoverflow.com/a/14701003/257479
 port_is_closed=$(timeout 2 bash -c "</dev/tcp/$HCTOOLS_BS_SERVER/$HCTOOLS_BS_PORT"; echo $?)
 if [ ! -z port_is_closed ]; then
 	echo ""
